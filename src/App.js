@@ -1,3 +1,5 @@
+import { useState } from "react";
+import Display from "./components/Display";
 import styled from "@emotion/styled";
 
 const Container = styled.div`
@@ -31,14 +33,18 @@ const Button = styled.button`
 `;
 
 function App() {
+  const [quote, setQuote] = useState({});
+
   const handleClick = async () => {
-    const api = await fetch("https://www.breakingbadapi.com/api/quote/random");
-    const quote = await api.json();
-    console.log(quote[0]);
+    const res = await fetch("https://www.breakingbadapi.com/api/quote/random");
+    const arr = await res.json();
+    const first = arr[0];
+    setQuote(first);
   };
 
   return (
     <Container>
+      <Display quote={quote} />
       <Button onClick={handleClick}>Obtener frase</Button>
     </Container>
   );
